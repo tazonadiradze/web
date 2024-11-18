@@ -5,7 +5,7 @@ const App = () => {
   return (
     <div className="h-screen flex flex-col">
       <Header />
-      <div className="">
+      <div className="flex-1 overflow-y-auto ">
         <Home />
       </div>
     </div>

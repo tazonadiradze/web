@@ -1,12 +1,5 @@
-import { useEffect } from "react";
+import Products from "../products/products";
 
 export default function Home() {
-  useEffect(() => {
-    
-  }, []);
-  return (
-    <div className="bg-red-500 text-lg w-full ">
-      <div></div>
-    </div>
-  );
+  return <Products />;
 }
