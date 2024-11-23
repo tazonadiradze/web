@@ -8,7 +8,7 @@ export default function Filter() {
     <div>
       <div>
         <input
-          className="rounded-3xl w-96 h-10 placeholder:text-center  text-center "
+          className="rounded-3xl w-96 h-10 placeholder:text-center  text-center  flex  shrink"
           type="text"
           placeholder="Search"
           onChange={(e) => setFilteredValue(e.target.value)}
@@ -17,4 +17,3 @@ export default function Filter() {
     </div>
   );
 }
- 

@@ -9,8 +9,7 @@ export const ProductContext = createContext<ProductContextType>({
 });
 
 export const Provider = ({ children }: { children: ReactNode }) => {
-  const [filteredData, setFilteredData] = useState([]);
-
+  const [filteredData, setFilteredData] = useState<Product[]>([]);
   const [filteredValue, setFilteredValue] = useState("");
 
   const [data, setData] = useState<Product[]>([]);
