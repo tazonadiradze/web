@@ -58,6 +58,11 @@ export default function Products() {
           </li>
         ))}
       </ul>
+      {filteredData.length === 0 && (
+        <div className="flex justify-center items-center text-2xl ">
+          no product
+        </div>
+      )}
     </div>
   );
 }

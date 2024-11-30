@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
-  const { openCart, toggleCart, cartItem } = useContext(CartContext);
+  const { openCart, toggleCart, cartItem, removeFromtheCart } =
+    useContext(CartContext);
 
   const sum = cartItem.reduce(
     (accumulator, currentValue) =>
@@ -10,6 +12,20 @@ export default function Cart() {
     0
   );
 
+  const totalQuantity = useMemo(() => {
+    return cartItem.reduce(
+      (accumulator, item) => accumulator + item.quantity,
+
+      0
+    );
+  }, [cartItem]);
+
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/checkout");
+    toggleCart();
+  };
   return (
     <>
       <div
@@ -17,6 +33,9 @@ export default function Cart() {
         className="fixed top-4 right-4 bg-white hover:bg-blue-700 text-black px-6 py-2 rounded-full shadow-lg transition duration-300 ease-in-out cursor-pointer z-50"
       >
         Cart
+        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full shadow-md">
+          {totalQuantity}
+        </span>
       </div>
 
       {openCart && (
@@ -59,6 +78,12 @@ export default function Cart() {
                     <div className="text-gray-500 text-sm">
                       ${Math.round(item.price)} x {item.quantity}
                     </div>
+                    <button
+                      onClick={() => removeFromtheCart(item.id)}
+                      className="text-red-500 hover:text-red-700 text-sm underline transition duration-200"
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
               ))}
@@ -71,12 +96,21 @@ export default function Cart() {
                   </div>
                 </div>
               )}
-            </div>
 
-            <div className="mt-6">
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md shadow-lg font-medium transition duration-300">
-                Proceed to Checkout
-              </button>
+              {cartItem.length > 0 ? (
+                <div className="mt-6">
+                  <button
+                    onClick={handleNavigate}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md shadow-lg font-medium transition duration-300"
+                  >
+                    Proceed to Checkout
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-6 text-center text-gray-500">
+                  Cart is empty
+                </div>
+              )}
             </div>
           </div>
         </div>
