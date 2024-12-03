@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { cartContextType, CartItem } from "../types";
-
+import { useMemo } from "react";
 export const CartContext = createContext<cartContextType>({
   openCart: false,
   toggleCart: () => {},
@@ -8,6 +8,8 @@ export const CartContext = createContext<cartContextType>({
   setCartItem: () => {},
   quantity: 1,
   removeFromtheCart: () => {},
+  sum: 0,
+  totalQuantity: 0,
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
@@ -18,6 +20,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const toggleCart = () => {
     setOpenCart((prev) => !prev);
   };
+
+  const sum = cartItem.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Math.round(currentValue.price) * currentValue.quantity,
+    0
+  );
+
+  const totalQuantity = useMemo(() => {
+    return cartItem.reduce(
+      (accumulator, item) => accumulator + item.quantity,
+
+      0
+    );
+  }, [cartItem]);
 
   const removeFromtheCart = (id: number) => {
     const filtered = cartItem
@@ -44,6 +60,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         setCartItem,
         quantity,
         removeFromtheCart,
+        sum,
+        totalQuantity,
       }}
     >
       {children}

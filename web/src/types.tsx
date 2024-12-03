@@ -16,7 +16,8 @@ export interface cartContextType {
   openCart: boolean;
   quantity: number;
   toggleCart: () => void;
-
+  sum:number
+  totalQuantity:number
   setCartItem: React.Dispatch<React.SetStateAction<CartItem[]>>;
   removeFromtheCart: (id: number) => void;
 }

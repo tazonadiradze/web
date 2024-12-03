@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { ProductContext } from "../../context/productContext";
 import { CartContext } from "../../context/CartContext";
 import { Product } from "../../types";
+import toast from "react-hot-toast";
 
 export default function Products() {
   const { filteredData } = useContext(ProductContext);
@@ -20,6 +21,10 @@ export default function Products() {
     } else {
       setCartItem([...cartItem, { ...product, quantity: 1 }]);
     }
+
+    toast.success("Product added to cart!", {
+      duration: 2000,
+    });
   };
 
   return (
